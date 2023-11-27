@@ -87,20 +87,23 @@ def make_modification_based_on_assignment():
             movie["year"] = 2001
     SpecialFunctions.Write_Json_file(data)
     
-
+    print("---------------------------")
     #TODO- Set the release year from the oldest movie to one year earlier.
+    print("Set the release year from the oldest movie to one year earlier.")
     data = SpecialFunctions.Read_Json_file()
-    oldest_movie = data[0]
+    oldest_movie_year = data[0]["year"]
     for movie in data:
-        if movie["year"] < oldest_movie["year"]:
-            oldest_movie = movie
-    print("old ---------------------------")
-    print(oldest_movie)
+        if movie["year"] < oldest_movie_year:
+            oldest_movie_year = movie["year"]
     for movie in data:
-        if movie["title"].casefold() == oldest_movie["title"].casefold():
-            movie["year"] -= 1
-            print("new ---------------------------")
+        if oldest_movie_year == movie["year"]:
+            print("before ---------------------------")
             print(movie)
+            movie["year"] -= 1
+            print("after ---------------------------")
+            print(movie)
+
+    
     SpecialFunctions.Write_Json_file(data)
     print("---------------------------")
     #TODO- Actor Natalie Portman changed her name to Nat Portman. Adjust this at all movies she is in.
@@ -138,13 +141,29 @@ def search_movie_title():
     pass 
     print("search movie title")
     userinput = input("Enter your input: ")
-    result = SpecialFunctions.search_object_by_title_singleoutput(userinput)
+    result = SpecialFunctions.search_object_by_title(userinput)
+    #result = SpecialFunctions.search_object_by_title_singleoutput(userinput)
     if result == None:
         print("No movie found")
     else:
         print(result)
     print("---------------------------")
 
+def change_title_and_or_release_year_by_search_on_title():
+    pass 
+    print("change title and/or release year by search on title")
+    userinput = input("Enter your input: ")
+    result = SpecialFunctions.search_object_by_title_singleoutput(userinput)
+    if result == None:
+        print("No movie found")
+    else:
+        print(result)
+        print("Enter new title")
+        new_title = input("Enter your input: ")
+        print("Enter new year")
+        new_year = input("Enter your input: ")
+        SpecialFunctions.Change_Title(new_title, userinput)
+        SpecialFunctions.Change_release_year(new_year, userinput)
 
 
 def main():
